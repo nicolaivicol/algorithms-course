@@ -1,20 +1,14 @@
-﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Algo1_Week3
 {
     class Node
     {
         public int id;
-        public List<int> nodesIDs;
         public List<Edge> edges;
-        
+
         public Node(string s)
         {
-            nodesIDs = new List<int>();
             edges = new List<Edge>();
 
             string[] sdel = s.Split('\t');
@@ -23,27 +17,44 @@ namespace Algo1_Week3
             {
                 try
                 {
-                    nodesIDs.Add(int.Parse(sdel[i]));
                     edges.Add(new Edge(id, int.Parse(sdel[i])));
                 }
                 catch
                 { }
-
+            }
+        }
+        public Node(Node n1, Node n2)
+        {
+            id = n1.id;
+            edges = new List<Edge>();
+            for (int i = 0; i < n1.edges.Count; i++)
+            {
+                edges.Add(new Edge(n1.edges[i]));
+            }
+            for (int i = 0; i < n2.edges.Count; i++)
+            {
+                edges.Add(new Edge(n2.edges[i]));
+            }
+        }
+        public Node(Node n)
+        {
+            id = n.id;
+            edges = new List<Edge>();
+            for (int i = 0; i < n.edges.Count; i++)
+            {
+                edges.Add(new Edge(n.edges[i]));
             }
         }
 
         public override string ToString()
         {
             string s = id.ToString() + " <-> ";
-            foreach (var item in nodesIDs)
+            foreach (Edge item in edges)
             {
-                s = s+item.ToString()+", ";
+                s = s + item.node2_id.ToString() + ", ";
             }
-
             return s;
         }
     }
-
-
 
 }
